@@ -13,11 +13,9 @@ export const spotifyToken = '<tokenAqui>'
 export const apiPort = 3000
 ```
 
-Também é preciso criar o .env na pasta server, com o password e o port do lockfile, e a porta da API, que é opcional e vem como default 3000.
+Também é possivel criar o .env na pasta server com o API_PORT sendo a porta da API, que é opcional e vem como default 3000.
 
 ```js
-LOCKFILE_PASSWORD=qmDi66exHlO6PwBH6mXsyw
-LOCKFILE_PORT=1298
 API_PORT=3000
 ```
 

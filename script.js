@@ -1,4 +1,4 @@
-const { spotifyToken, apiPort } = require("./token");
+import { spotifyToken, apiPort } from "./token.js"
 
 let lastSong = ''
 let lastArtist = ''
@@ -40,7 +40,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 }
 
 const changeLoLStatus = (message) => {
-  fetch(`http://localhost:/${apiPort}`, {
+  fetch(`http://localhost:${apiPort}`, {
     method: 'PUT',
     headers: {
       'accept': 'application/json',
