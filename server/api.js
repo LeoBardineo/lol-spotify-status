@@ -8,6 +8,8 @@ const { authenticate } = require('league-connect')
 
 require('dotenv').config()
 const port = process.env.API_PORT || 3000
+const isUpdating = true
+const msgUpdating = '♫ Tocando {track} - {artist} ♫'
 
 app.use(express.json())
 
@@ -29,7 +31,7 @@ const setStatusMessage = async (req, res) => {
       'Authorization': `Basic ${password}`
     }
   });
-  console.log(response)
+  console.log('Atualizado com sucesso! Status: ', statusMessage)
   res.json(response.data.lol)
 }
 
@@ -39,6 +41,19 @@ app.put('/lastfm', async (req, res) => {
   req.body.statusMessage = req.body.statusMessage.replace('{track}', track).replace('{artist}', artist)
   await setStatusMessage(req, res)
 })
+
+const updateAutomatically = setInterval(async () => {
+  await fetch(`http://localhost:${port}/lastfm`, {
+    method: 'PUT',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ statusMessage: msgUpdating })
+  });
+}, 60 * Math.pow(10, 3));
+
+if (!isUpdating) clearInterval(updateAutomatically)
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
