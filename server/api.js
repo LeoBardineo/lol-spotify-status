@@ -3,6 +3,7 @@ const app = express()
 const axios = require('axios')
 const https = require('https')
 const cors = require('cors')
+const { getPlayingTrack } = require('./scrapper')
 const { authenticate } = require('league-connect')
 
 require('dotenv').config()
@@ -13,7 +14,7 @@ app.use(express.json())
 app.use(cors())
 app.options('*', cors())
 
-app.put('/', async (req, res) => {
+const setStatusMessage = async (req, res) => {
   const agent = new https.Agent({ rejectUnauthorized: false })
   const credentials = await authenticate();
   const password = Buffer.from(`riot:${credentials.password}`).toString('base64')
@@ -30,6 +31,13 @@ app.put('/', async (req, res) => {
   });
   console.log(response)
   res.json(response.data.lol)
+}
+
+app.put('/', setStatusMessage)
+app.put('/lastfm', async (req, res) => {
+  const { track, artist } = await getPlayingTrack()
+  req.body.statusMessage = req.body.statusMessage.replace('{track}', track).replace('{artist}', artist)
+  await setStatusMessage(req, res)
 })
 
 app.listen(port, () => {
