@@ -2,7 +2,7 @@
 
 É tipo o status do MSN, só que no LoL.
 
-![Demo](./lol-spotify-status.mp4)
+https://github.com/LeoBardineo/lol-spotify-status/assets/45073941/7b2e6468-6e99-4f05-ad58-be571d73d5e8
 
 Há duas formas de usar:
 - Usando o Spotify Web SDK, disponível no `index.html`.
